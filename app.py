@@ -9,7 +9,11 @@ def send_static(filename):
 
 @route('/')
 def index():
-	return template(index.tpl)
+	# CONNECT DATABASE
+	con = sqlite3.connect('data\\todo.dat')
+	cur = con.cursor()
+	rows = cur.execute('SELECT * FROM todo ORDER BY datetime ASC')
+	return template(index.tpl, rows=rows)
 	
 @route('/new', method=['GET','POST'])
 def new_task():

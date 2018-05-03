@@ -13,7 +13,7 @@ def index():
 	con = sqlite3.connect('data\\todo.dat')
 	cur = con.cursor()
 	rows = cur.execute('SELECT * FROM todo ORDER BY datetime ASC')
-	return template(index.tpl, rows=rows)
+	return template('index.tpl', rows=rows)
 	
 @route('/item<item:re[0-9]+>')
 def show_task(item):
@@ -50,9 +50,9 @@ def new_task():
 		con.commit()
 		rows = cur.execute('SELECT * FROM todo ORDER BY datetime ASC')
 		
-		return template(index.tpl, rows = rows)
+		return template('index.tpl', rows = rows)
 	else:
-		return template(newtask.tpl)
+		return template('newtask.tpl')
 		
 @route('edit<no:int>', method=['GET','POST'])
 def edit_item(no):
@@ -88,4 +88,5 @@ def edit_item(no):
 	
 	
 
-run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), app=my_session)
+run()
+#run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), app=my_session)
